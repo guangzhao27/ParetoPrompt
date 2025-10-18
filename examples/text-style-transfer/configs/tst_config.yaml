@@ -1,0 +1,72 @@
+# Text Style Transfer Config
+defaults:
+  - base_tst
+  - _self_
+# Data
+dataset: "???"
+dataset_seed: null
+direction: "???"
+# Reward
+style_tokenizer: "bert-base-uncased"
+lower_outputs: true
+control_output_length: true
+
+# Single Prompt Model
+prompt_length: 5
+# prompt_train_batch_size: 8 # prompt_train_batch_size = train_batch_size*num_repeats
+prompt_infer_batch_size: 16
+# LM Adaptor Model
+logit_bias: -10
+# SQL Module
+reward_shaping_old_min: 0
+reward_shaping_old_max: 1
+reward_shaping_new_min: -20
+reward_shaping_new_max: 80
+# Trainer
+train_batch_size: 2
+num_repeats: 4
+max_train_steps: 12000
+train_shuffle: false
+eval_batch_size: 16 # this defines how much text used fro evaluting the best prompt 
+eval_steps: 50
+save_steps: 100
+learning_rate: 5e-5
+random_seed: null
+# new settings
+report_to_wandb: false
+training_device: "cpu"
+run_name: null 
+dpo_loss_config: 
+  dpo_training: false
+  name: "dpo"
+  beta: 1.0
+  reference_free: false
+  label_smoothing: 0.0
+  multi_optimize: false
+  nondominate_punishment: null
+  epsilon: 0.1 # epsilon is the parameter for soft diff loss
+model_path: null # example: outputs/2024-04-04/05-24-39
+load_step: 0
+num_train_epochs: 100
+
+# Evaluation setting
+max_size: null # max_size defines the training dataset size, it's used for few shot learning
+
+#reference update setting
+target_update_method: "polyak" # select among "copy" or "polyak". 
+# "copy": the reference model copy policy model every target_update_steps. 
+# "polyak": reference learning for reference_learning_rate 
+target_update_steps: null # steps number to update reference model, for target_update_method="copy"
+target_learning_rate: 0.001 # reference model learning rate
+
+# # Deterministic text generation
+# num_samples: 1
+# num_bootstraps: 1
+# task_top_k: 1
+# top_k: 50 # generate prompt for training is always random
+
+# Non-Deterministic text generation
+task_top_k: 10
+top_k: 50 # generate prompt for training is always random
+
+algorithm_name: RlPrompt

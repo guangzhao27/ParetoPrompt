@@ -1,0 +1,9 @@
+/wandb/*
+examples/text-style-transfer/data/*
+**/wandb/
+
+**/__pycache__/
+**/outputs/*
+**/llm_cache_dir/
+*.json
+examples/text-style-transfer/style_classifiers/yelp-bert-base-uncased-train/pytorch_model.bin
